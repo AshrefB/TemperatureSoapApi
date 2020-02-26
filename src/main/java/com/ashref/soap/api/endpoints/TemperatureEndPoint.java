@@ -6,6 +6,8 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import com.ashref.soap.api.services.TemperatureService;
+import com.ashref.soap.api.temperature.MaxTemperatureRequest;
+import com.ashref.soap.api.temperature.MaxTemperatureResponse;
 import com.ashref.soap.api.temperature.MinTemperatureRequest;
 import com.ashref.soap.api.temperature.MinTemperatureResponse;
 
@@ -19,5 +21,11 @@ public class TemperatureEndPoint {
 	@ResponsePayload
 	public MinTemperatureResponse getMinTemperature(@RequestPayload MinTemperatureRequest request) {
 		return service.min(request);
+	}
+	
+	@PayloadRoot(namespace = NAMESPACE, localPart = "MaxTemperatureRequest")
+	@ResponsePayload
+	public MaxTemperatureResponse getMaxTemperature(@RequestPayload MaxTemperatureRequest request) {
+		return service.max(request);
 	}
 }
