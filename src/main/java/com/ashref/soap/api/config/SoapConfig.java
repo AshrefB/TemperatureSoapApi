@@ -21,7 +21,7 @@ public class SoapConfig {
 		servlet.setTransformWsdlLocations(true);
 		return new ServletRegistrationBean<MessageDispatcherServlet>(servlet, "/api/*");
 	}
-	
+
 	@Bean(name = "temperature")
 	public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema schema) {
 		DefaultWsdl11Definition defaultWsdl11Definition = new DefaultWsdl11Definition();
@@ -29,10 +29,10 @@ public class SoapConfig {
 		defaultWsdl11Definition.setLocationUri("/api");
 		defaultWsdl11Definition.setTargetNamespace("http://www.ashref.com/soap/api/temperature");
 		defaultWsdl11Definition.setSchema(schema);
-		
+
 		return defaultWsdl11Definition;
 	}
-	
+
 	@Bean
 	public XsdSchema schema() {
 		return new SimpleXsdSchema(new ClassPathResource("xsd/temperature.xsd"));

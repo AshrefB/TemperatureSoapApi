@@ -2,7 +2,9 @@ package com.ashref.soap.api.services;
 
 import java.util.Comparator;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
+
 import com.ashref.soap.api.temperature.AvgTemperatureRequest;
 import com.ashref.soap.api.temperature.AvgTemperatureResponse;
 import com.ashref.soap.api.temperature.ClosestToZeroTemperatureRequest;
@@ -21,39 +23,36 @@ public class TemperatureService {
 		response.setResult(list.get(0));
 		return response;
 	}
-	
+
 	public MaxTemperatureResponse max(MaxTemperatureRequest request) {
 		MaxTemperatureResponse response = new MaxTemperatureResponse();
 		List<Integer> list = request.getTemperatures();
 		list.sort(Comparator.naturalOrder());
-		response.setResult(list.get(list.size()-1));
+		response.setResult(list.get(list.size() - 1));
 		return response;
 	}
-	
+
 	public AvgTemperatureResponse avg(AvgTemperatureRequest request) {
 		AvgTemperatureResponse response = new AvgTemperatureResponse();
 		List<Integer> list = request.getTemperatures();
-		double avg = list.stream()
-			.mapToInt(i -> i)
-			.average()
-			.getAsDouble();
-		
+		double avg = list.stream().mapToInt(i -> i).average().getAsDouble();
+
 		response.setResult(avg);
 		return response;
 	}
-	
+
 	public ClosestToZeroTemperatureResponse closestToZero(ClosestToZeroTemperatureRequest request) {
 		ClosestToZeroTemperatureResponse response = new ClosestToZeroTemperatureResponse();
 		List<Integer> list = request.getTemperatures();
-		if(list.size() > 0) {
-	        int num = list.get(0);
-	        for (int i = 1; i < list.size(); i++) {
-	            if(Math.abs(list.get(i)) < Math.abs(num)) 
-	            	num = list.get(i);
-	            if(list.get(i) == Math.abs(num)) 
-	            	num = list.get(i);
-	        }
-	        
+		if (list.size() > 0) {
+			int num = list.get(0);
+			for (int i = 1; i < list.size(); i++) {
+				if (Math.abs(list.get(i)) < Math.abs(num))
+					num = list.get(i);
+				if (list.get(i) == Math.abs(num))
+					num = list.get(i);
+			}
+
 			response.setResult(num);
 		}
 		return response;
