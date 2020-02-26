@@ -4,8 +4,12 @@ import java.util.Comparator;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
+import com.ashref.rest.api.payload.requests.TemperatureRequest;
+import com.ashref.rest.api.payload.responses.TemperatureResponse;
 import com.ashref.soap.api.temperature.AvgTemperatureRequest;
 import com.ashref.soap.api.temperature.AvgTemperatureResponse;
+import com.ashref.soap.api.temperature.ClosestToZeroTemperatureRequest;
+import com.ashref.soap.api.temperature.ClosestToZeroTemperatureResponse;
 import com.ashref.soap.api.temperature.MaxTemperatureRequest;
 import com.ashref.soap.api.temperature.MaxTemperatureResponse;
 import com.ashref.soap.api.temperature.MinTemperatureRequest;
@@ -38,6 +42,23 @@ public class TemperatureService {
 			.getAsDouble();
 		
 		response.setResult(avg);
+		return response;
+	}
+	
+	public ClosestToZeroTemperatureResponse closestToZero(ClosestToZeroTemperatureRequest request) {
+		ClosestToZeroTemperatureResponse response = new ClosestToZeroTemperatureResponse();
+		List<Integer> list = request.getTemperatures();
+		if(list.size() > 0) {
+	        int num = list.get(0);
+	        for (int i = 1; i < list.size(); i++) {
+	            if(Math.abs(list.get(i)) < Math.abs(num)) 
+	            	num = list.get(i);
+	            if(list.get(i) == Math.abs(num)) 
+	            	num = list.get(i);
+	        }
+	        
+			response.setResult(num);
+		}
 		return response;
 	}
 }
